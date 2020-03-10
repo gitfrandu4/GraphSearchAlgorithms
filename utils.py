@@ -543,7 +543,31 @@ class FIFOQueue(Queue):
             self.start = 0
         return e
 
+class BBSQueue(Queue):
+    """Cola que mantiene los nodos ordenados de menor a mayor coste acumulado para la estrategia de búsqueda
+        mediante ramificación y acotación (branch-and-bound search)"""
 
+    def __init__(self):
+        self.A = []
+        self.start = 0
+
+    def append(self, item):
+        self.A.append(item)
+
+    def __len__(self):
+        return len(self.A) - self.start
+
+    def extend(self, items):
+        self.A.extend(items) # Añadimos los nuevos nodos a la cola.
+
+        # Ordenaremos los elementos de la cola de menor a mayor coste acumulado.
+        for i in range(0, len(self.A)):
+            for j in range(0, len(self.A)-1):
+                if self.A[j].path_cost > self.A[j+1].path_cost:
+                    self.A[j], self.A[j+1] = self.A[j+1], self.A[j]
+
+    def pop(self):
+        return self.A.pop()
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]
