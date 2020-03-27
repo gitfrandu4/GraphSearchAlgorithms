@@ -5,7 +5,7 @@ Práctica 1 de Fundamentos de los Sistemas Inteligentes
 
 
 
-<img src="https://github.com/gitfrandu4/GraphSearchAlgorithms/tree/master/img/romania.jpeg" alt="Romania" style="zoom: 67%;" />
+<img src="https://github.com/gitfrandu4/GraphSearchAlgorithms/blob/master/img/romania.jpeg" alt="Romania" style="zoom: 67%;" />
 
 
 
@@ -38,11 +38,11 @@ Práctica 1 de Fundamentos de los Sistemas Inteligentes
 
 La estrategia de búsqueda **Ramificación y Acotación con Subestimación** pertenece a las estrategias de **búsqueda informada**. En este caso, además de utilizar el coste acumulado de un camino desde el estado inicial hasta un cierto estado del grafo, se utiliza una **estimación heurística** hasta el estado final para ordenar la lista abierta. De esta forma, dado un determinado nodo _n_ del árbol del búsqueda, la expresión de coste estimado _f(n)_ será:
 
-![Eqn1](https://github.com/gitfrandu4/GraphSearchAlgorithms/tree/master/img/Eqn2.png)
+![Eqn1](https://github.com/gitfrandu4/GraphSearchAlgorithms/blob/master/img/Eqn2.png)
 
 Donde _g(n)_ representa el coste acumulado y _h(n)_ la heurística utilizada. Para que el camino encontrado sea **óptimo**, la heurística debe ser **consistente**. Es decir, ha de cumplir que para cada nodo _n_ y cada nodo hijo _n’_ alcanzado mediante la acción _a_, el valor heurístico _h(n)_ debe ser siempre menor o igual al valor heurístico _h(n’)_ más el coste del nodo _n_ al _n’_ mediante la acción _a_.
 
-![Eqn1](https://github.com/gitfrandu4/GraphSearchAlgorithms/tree/master/img/Eqn1.png)
+![Eqn1](https://github.com/gitfrandu4/GraphSearchAlgorithms/blob/master/img/Eqn1.png)
 
 #### Tareas
 
@@ -52,35 +52,33 @@ Donde _g(n)_ representa el coste acumulado y _h(n)_ la heurística utilizada. Pa
 
 * Comparación de la cantidad de nodos expandidos por este método con relación al método ramificación y acotación:
 
-Salida:
+  ```
+  --------------------Segunda parte--------------------
 
-```
---------------------Segunda parte--------------------
+  Ejemplo 1: Desde Oradea hasta Bucharest
 
-Ejemplo 1: Desde Oradea hasta Bucharest
+  Nodos expandidos: 27
+  Branch-and-Bound Search: [<Node B>, <Node P>, <Node R>, <Node S>, <Node O>]
 
-Nodos expandidos: 27
-Branch-and-Bound Search: [<Node B>, <Node P>, <Node R>, <Node S>, <Node O>]
+  Nodos expandidos: 17
+  B&Bound-with-Und Search: [<Node B>, <Node P>, <Node R>, <Node S>, <Node O>]
 
-Nodos expandidos: 17
-B&Bound-with-Und Search: [<Node B>, <Node P>, <Node R>, <Node S>, <Node O>]
+  -----------------------------------------------------
+  Ejemplo 2: Desde Timisoara hasta Neamt
 
------------------------------------------------------
-Ejemplo 2: Desde Timisoara hasta Neamt
+  Nodos expandidos: 46
+  Branch-and-Bound Search: [<Node N>, <Node I>, <Node V>, <Node U>, <Node B>, <Node P>, <Node R>, <Node S>, <Node A>, <Node T>]
 
-Nodos expandidos: 46
-Branch-and-Bound Search: [<Node N>, <Node I>, <Node V>, <Node U>, <Node B>, <Node P>, <Node R>, <Node S>, <Node A>, <Node T>]
+  Nodos expandidos: 43
+  B&Bound-with-Und Search: [<Node N>, <Node I>, <Node V>, <Node U>, <Node B>, <Node P>, <Node R>, <Node S>, <Node A>, <Node T>]
 
-Nodos expandidos: 43
-B&Bound-with-Und Search: [<Node N>, <Node I>, <Node V>, <Node U>, <Node B>, <Node P>, <Node R>, <Node S>, <Node A>, <Node T>]
+  -----------------------------------------------------
+  Ejemplo 3: Desde Urziceni hasta Eforie
 
------------------------------------------------------
-Ejemplo 3: Desde Urziceni hasta Eforie
+  Nodos expandidos: 13
+  Branch-and-Bound Search: [<Node E>, <Node H>, <Node U>]
 
-Nodos expandidos: 13
-Branch-and-Bound Search: [<Node E>, <Node H>, <Node U>]
-
-Nodos expandidos: 6
-B&Bound-with-Und Search: [<Node E>, <Node H>, <Node U>]
-```
+  Nodos expandidos: 6
+  B&Bound-with-Und Search: [<Node E>, <Node H>, <Node U>]
+  ```
 
