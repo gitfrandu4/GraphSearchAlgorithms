@@ -99,9 +99,13 @@ def graph_search(problem, fringe):
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
     fringe.append(Node(problem.initial))
+    nodos_expandidos = 0
     while fringe:
+        nodos_expandidos += 1
         node = fringe.pop()
         if problem.goal_test(node.state):
+            nodos_expandidos += fringe.__len__()
+            print("Nodos expandidos: " + str(nodos_expandidos))
             return node
         if node.state not in closed:
             closed[node.state] = True
@@ -121,6 +125,10 @@ def depth_first_graph_search(problem):
 def branch_and_bound_search(problem):
     """Practica 1: Estrategia de Ramificación y Acotación"""
     return graph_search(problem, BBSQueue())
+
+def branch_and_bound_search_with_und(problem):
+    """Práctica 1b: Estrategia de Ramificación y Acotación con Subestimación"""
+    return graph_search(problem, BBSwithUndQueue(problem))
 
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.

@@ -1,6 +1,9 @@
 
 #______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
+import math
+
+import search
 
 infinity = 1.0e400
 
@@ -515,12 +518,14 @@ class Queue:
 
 
 def Stack():
-    """Return an empty list, suitable as a Last-In-First-Out Queue."""
+    """Return an empty list, suitable as a Last-In-First-Out Queue.
+    Pila => recorrido en profundidad"""
     return []
 
 
 class FIFOQueue(Queue):
-    """A First-In-First-Out Queue."""
+    """A First-In-First-Out Queue.
+    Cola => recorrido en anchura"""
 
     def __init__(self):
         self.A = []
@@ -544,8 +549,8 @@ class FIFOQueue(Queue):
         return e
 
 class BBSQueue(Queue):
-    """Cola que mantiene los nodos ordenados de menor a mayor coste acumulado para la estrategia de búsqueda
-        mediante ramificación y acotación (branch-and-bound search)"""
+    """Gestor de lista abierta para el algoritmo de Ramificación y Acotación (branch-and-bound search).
+        Es una cola que mantiene los nodos ordenados de menor a mayor coste acumulado."""
 
     def __init__(self):
         self.A = []
@@ -560,14 +565,40 @@ class BBSQueue(Queue):
     def extend(self, items):
         self.A.extend(items) # Añadimos los nuevos nodos a la cola.
 
-        # Ordenaremos los elementos de la cola de menor a mayor coste acumulado.
-        for i in range(0, len(self.A)):
-            for j in range(0, len(self.A)-1):
-                if self.A[j].path_cost > self.A[j+1].path_cost:
-                    self.A[j], self.A[j+1] = self.A[j+1], self.A[j]
+        # # Ordenamos los elementos de la cola de menor a mayor coste acumulado.
+        # for i in range(0, len(self.A)):
+        #     for j in range(0, len(self.A)-1):
+        #         if self.A[j].path_cost > self.A[j+1].path_cost:
+        #             self.A[j], self.A[j+1] = self.A[j+1], self.A[j]
+        self.A.sort(key = lambda x:x.path_cost, reverse=True)
 
     def pop(self):
-        return self.A.pop(0)
+        # return self.A.pop(0)
+        return self.A.pop()
+
+class BBSwithUndQueue(Queue):
+    """Gestor de lista abierta para el algoritmo de Ramificación y Acotación con
+    Subestimación (branch-and-bound-with-underestimates)."""
+
+    def __init__(self, problem):
+        self.A = []
+        self.start = 0
+        self.problem = problem
+
+    def append(self, item):
+        self.A.append(item)
+
+    def __len__(self):
+        return len(self.A) - self.start
+
+    def extend(self, items):
+        self.A.extend(items)
+        # Ordenamos la lista en función del coste acumulado 'g(n)' más la función de estimación 'h(n)' que
+        # se corresponde a la distancia en línea recta desde el estado actual hasta el objetivo.
+        self.A.sort(key=lambda x: x.path_cost + search.GPSProblem.h(self.problem, x), reverse = True)
+
+    def pop(self):
+        return self.A.pop()
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]
